@@ -1,4 +1,12 @@
 from trueskill import TrueSkill, Rating
+import psycopg
+from dotenv import load_dotenv
+import os
+
+#INITIALISE CONNECTION TO DATABASE
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
+connection = psycopg.connect(DATABASE_URL)
 
 #SETUP THE TRUESKILL ENVIRONMENT
 env = TrueSkill(beta=4.7,
@@ -6,6 +14,7 @@ env = TrueSkill(beta=4.7,
                 draw_probability=0)
 env.make_as_global()
 
+#PRINT STARTING TEXT
 print("-----------------------------------------------")
 print("TRUESKILL CALCULATOR FOR THE HEAT LEAGUE")
 print("BROUGHT TO YOU BY TMM")
