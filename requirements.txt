@@ -1,2 +1,5 @@
+psycopg==3.3.8
+psycopg-binary==3.3.8
+python-dotenv==1.2.4
 six==1.17.0
 trueskill==0.4.5
