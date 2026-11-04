@@ -3,7 +3,7 @@ import psycopg
 from dotenv import load_dotenv
 import os
 
-def trueskill_calc():
+def trueskill_tool():
     #INITIALISE CONNECTION TO DATABASE
     load_dotenv()
     DATABASE_URL = os.getenv("DATABASE_URL")
@@ -16,7 +16,7 @@ def trueskill_calc():
     env.make_as_global()
 
     #GATHER PLAYER INFO
-    players_input = input("Enter race result:").split(",")
+    players_input = input("Enter race result: ").split(",")
     players = [player.strip().capitalize() for player in players_input]
 
     ffa_teams = []
@@ -38,6 +38,11 @@ def trueskill_calc():
                 ffa_teams.append((Rating(), ))
 
     #CONFIRM ADDITION OF NEW PLAYERS TO THE RANKINGS
+    if len(new_players) > 0:
+        confirmation = input(f"Confirm the addition of the following players {new_players} [y/n]: ")
+        if confirmation.upper() != "Y":
+            print("Function cancelled")
+            return
 
     #EXECUTE TRUESKILL ALGORITHM
     placings = [i for i in range(len(players))]
@@ -61,10 +66,10 @@ def trueskill_calc():
                 cur.execute(
                     """
                     UPDATE players
-                    SET mu, sigma = (%s, %s)
+                    SET mu = %s, sigma = %s
                     WHERE player = %s
                     """,
-                    (players[i], updated_teams[i][0].mu, updated_teams[i][0].sigma)
+                    (updated_teams[i][0].mu, updated_teams[i][0].sigma, players[i])
                 )
 
-    print("Results were successfully uploaded")
+    print("Results uploaded successfully")
