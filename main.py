@@ -6,9 +6,13 @@ env = TrueSkill(beta=4.7,
                 draw_probability=0)
 env.make_as_global()
 
+print("-----------------------------------------------")
+print("TRUESKILL CALCULATOR FOR THE HEAT LEAGUE")
+print("BROUGHT TO YOU BY TMM")
+print("-----------------------------------------------")
+
 #GATHER PLAYER INFO
-print("ENTER COMMA SEPARATED LIST OF PLAYER PLACEMENTS")
-players = input().split(", ")
+players = input("Enter race result:").split(", ")
 
 #EXECUTE TRUESKILL ALGORITHM
 ffa_teams = [(Rating(),) for i in range(len(players))]
